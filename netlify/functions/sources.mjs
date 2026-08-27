@@ -40,16 +40,20 @@ export const SOURCES = [
   { name: 'Gulf News', region: 'uae', weight: 1.0, method: 'google-news-rss',
     hint: 'entertainment', url: GN('site:gulfnews.com entertainment') },
 
-  { name: 'Gulf Today', region: 'uae', weight: 1.1, method: 'rss',
-    url: 'https://www.gulftoday.ae/rss' },
+  /* gulftoday.ae/rss serves HTML rather than a feed, so Gulf Today comes
+     through Google News instead. */
+  { name: 'Gulf Today', region: 'uae', weight: 1.15, method: 'google-news-rss',
+    url: GN('site:gulftoday.ae') },
   { name: 'Gulf Today', region: 'uae', weight: 1.05, method: 'google-news-rss',
-    url: GN('site:gulftoday.ae UAE') },
+    url: GN('site:gulftoday.ae UAE business') },
 
   /* ---------------- GCC ---------------- */
   { name: 'AGBI', region: 'gcc', weight: 1.3, method: 'rss',
     url: 'https://www.agbi.com/feed/' },
-  { name: 'Gulf Business', region: 'gcc', weight: 1.2, method: 'rss',
-    url: 'https://gulfbusiness.com/feed/' },
+  /* gulfbusiness.com returns 403 to datacenter IPs, so it is fetched
+     through Google News rather than directly. */
+  { name: 'Gulf Business', region: 'gcc', weight: 1.2, method: 'google-news-rss',
+    url: GN('site:gulfbusiness.com') },
   { name: 'Arab News', region: 'gcc', weight: 1.15, method: 'rss',
     url: 'https://www.arabnews.com/rss.xml' },
   { name: 'Zawya', region: 'gcc', weight: 1.1, method: 'google-news-rss',
@@ -64,8 +68,13 @@ export const SOURCES = [
     url: 'https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms' },
   { name: 'Economic Times', region: 'india', weight: 1.25, method: 'rss',
     url: 'https://economictimes.indiatimes.com/news/economy/rssfeeds/1373380680.cms' },
-  { name: 'Business Standard', region: 'india', weight: 1.2, method: 'rss',
-    url: 'https://www.business-standard.com/rss/markets-106.rss' },
+  /* business-standard.com returns 403 to datacenter IPs. */
+  { name: 'Business Standard', region: 'india', weight: 1.2, method: 'google-news-rss',
+    url: GN('site:business-standard.com markets OR economy', 'IN') },
+  { name: 'Mint', region: 'india', weight: 1.2, method: 'rss',
+    url: 'https://www.livemint.com/rss/markets' },
+  { name: 'Moneycontrol', region: 'india', weight: 1.15, method: 'google-news-rss',
+    url: GN('site:moneycontrol.com markets OR business', 'IN') },
   { name: 'The Hindu', region: 'world', weight: 1.2, method: 'rss',
     url: 'https://www.thehindu.com/news/international/feeder/default.rss' },
   { name: 'The Hindu', region: 'india', weight: 1.2, method: 'rss',
